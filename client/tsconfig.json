@@ -3,11 +3,11 @@
         "module": "commonjs",
         "target": "es5",
         "noImplicitAny": false,
-        "sourceMap": false,
+        "sourceMap": true,
         "jsx": "react",
         "outDir": "bin/"
     },
     "exclude": [
-        "./node_modules/"
+        "node_modules"
     ]
 }
