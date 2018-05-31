@@ -1,0 +1,26 @@
+{
+  "name": "app",
+  "version": "1.0.0",
+  "description": "Description",
+  "main": "main.js",
+  "scripts": {
+    "start": "electron . --enable-logging",
+    "build": "tsc",
+    "watch": "tsc -w",
+    "icon": "png-to-ico app.png > app.ico",
+    "packager": "electron-packager . --out out --overwrite --icon=./app.ico"
+  },
+  "repository": "",
+  "author": "GitHub",
+  "devDependencies": {
+    "electron": "^1.4.1",
+    "electron-packager": "^8.6.0",
+    "png-to-ico": "^1.0.2",
+    "tsc": "^1.20150623.0",
+    "typescript": "^2.2.2"
+  },
+  "dependencies": {
+    "@types/react": "^15.0.20",
+    "@types/react-dom": "^0.14.23"
+  }
+}
