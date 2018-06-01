@@ -18,7 +18,7 @@ export class App extends React.Component<AppProps,{}> {
     render() {
         var curImg = this.props.currentImage;
         
-        var mytags = [ {id:'GOOD', image:'good.png'}, {id:'BAD', image:'bad.png'}];
+        var mytags = [ {id:'GOOD', image:'good.png'}, {id:'BAD', image:'bad.png'}, {id:'', image:'none.png'}];
 
         return <div className="panelbox">
                     <PanelFaces tags={mytags} onFaceSelected={this.props.onFaceSelected}/>

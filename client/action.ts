@@ -55,9 +55,11 @@ const mapDispatchToProps: any = (dispatch: Dispatch<any>) => {
 
             if( file == null )
                 return;
-                
-            //alert(file + ': ' + id)
-            files.approveFile(file, id);
+            
+            if(id != '') {
+                //alert(file + ': ' + id)
+                files.approveFile(file, id);
+            }
             
             var next = interop.getNextImage();
             dispatch(setImage(next))
