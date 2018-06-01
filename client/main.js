@@ -54,5 +54,6 @@ function createMainWindow() {
     var menu = electron.Menu.getApplicationMenu();
     menu.append(new electron.MenuItem({label: 'MenuItem1', click() { console.log('item 1 clicked') }}))
     electron.Menu.setApplicationMenu(menu)
+    
     return win;
 }

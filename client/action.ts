@@ -1,8 +1,7 @@
-import { createStore, Dispatch } from 'redux';
-import { connect, Provider } from 'react-redux';
-
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
+// import { createStore, Dispatch } from 'redux';
+// import { connect, Provider } from 'react-redux';
+// import * as React from 'react';
+// import * as ReactDOM from 'react-dom';
 
 import * as interop from './interop.js';
 
@@ -33,7 +32,7 @@ function photoApp(state = initialState, action) {
     return state;
 }
 
-const store = createStore(photoApp);
+const store = Redux.createStore(photoApp);
 
 store.subscribe( ()=> {
     //console.log(JSON.stringify(store.getState()));
@@ -70,7 +69,7 @@ const mapDispatchToProps: any = (dispatch: Dispatch<any>) => {
     };
 }
 
-export const ConnectPhotoApp = connect(
+export const ConnectPhotoApp = ReactRedux.connect(
     mapStateToProps,
     mapDispatchToProps
 );

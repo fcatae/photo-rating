@@ -1,6 +1,6 @@
-import * as React from 'react';
-import * as ReactDOM from 'react-dom';
-import { Provider } from 'react-redux';
+// import * as React from 'react';
+// import * as ReactDOM from 'react-dom';
+// import { Provider } from 'react-redux';
 
 import * as interop from './interop.js';
 import * as action from './action.js';
@@ -88,6 +88,6 @@ var store = action.Store;
 
 var PhotoApp = action.ConnectPhotoApp(App);
 
-ReactDOM.render(<Provider store={store}>
+ReactDOM.render(<ReactRedux.Provider store={store}>
     <PhotoApp/>
-  </Provider>, document.getElementById('app'));
+  </ReactRedux.Provider>, document.getElementById('app'));
