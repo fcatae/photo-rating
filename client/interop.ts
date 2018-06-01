@@ -1,3 +1,5 @@
+import * as files from './server/files.js';
+
 // create the queue
 var _queue = [];
 function insertImageIntoQueue(img) {
@@ -16,7 +18,7 @@ function insertImageIntoQueue(img) {
 //     ];
 // }
 
-import { createImageList } from './files.js';
+import { createImageList } from './server/files.js';
 
 // insert images into the queue
 createImageList().map( insertImageIntoQueue );
@@ -27,3 +29,6 @@ export function getNextImage(): string {
     return next;
 }
 
+export function approveFile(file: string, tag: string) {
+    return files.approveFile(file, tag);
+}

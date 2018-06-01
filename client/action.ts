@@ -6,7 +6,6 @@ import * as ReactDOM from 'react-dom';
 
 import { App } from './app.js'
 import * as interop from './interop.js';
-import * as files from './files.js';
 
 interface AppState {
     currentImage: string;
@@ -58,7 +57,7 @@ const mapDispatchToProps: any = (dispatch: Dispatch<any>) => {
             
             if(id != '') {
                 //alert(file + ': ' + id)
-                files.approveFile(file, id);
+                interop.approveFile(file, id);
             }
             
             var next = interop.getNextImage();
