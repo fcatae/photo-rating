@@ -4,7 +4,6 @@ import { connect, Provider } from 'react-redux';
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
 
-import { App } from './app.js'
 import * as interop from './interop.js';
 
 interface AppState {
