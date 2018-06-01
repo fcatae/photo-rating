@@ -1,6 +1,6 @@
 {
-  "name": "app",
-  "version": "1.0.0",
+  "name": "photo-rating-app",
+  "version": "1.0.2",
   "description": "Description",
   "main": "main.js",
   "scripts": {
@@ -8,21 +8,24 @@
     "build": "tsc",
     "watch": "tsc -w",
     "icon": "png-to-ico app.png > app.ico",
-    "packager": "electron-packager . --out out --overwrite --icon=./app.ico"
+    "packager": "electron-packager . --out out --overwrite --icon=./app.ico",
+    "pub": "npm publish && npm version patch"
   },
-  "repository": "",
-  "author": "GitHub",
+  "repository": "https://github.com/fcatae/photo-rating",
+  "author": "fcatae",
   "devDependencies": {
     "@types/react": "=16.3.14",
     "@types/react-dom": "=16.0.5",
     "@types/react-redux": "^6.0.0",
-    "electron": "~2.0.2",
     "electron-packager": "~12.1.0",
+    "increment-version": "0.0.1",
     "png-to-ico": "^1.0.2",
     "react": "^16.3.0",
     "react-dom": "^16.3.0",
     "react-redux": "^5.0.7",
     "typescript": "^2.9.1"
   },
-  "dependencies": {}
+  "dependencies": {
+    "electron": "~2.0.2"
+  }
 }
