@@ -6,6 +6,7 @@ import * as ReactDOM from 'react-dom';
 
 import { App } from './app.js'
 import * as interop from './interop.js';
+import * as files from './files.js';
 
 interface AppState {
     currentImage: string;
@@ -50,6 +51,14 @@ const mapStateToProps: any = (state: AppState) => {
 const mapDispatchToProps: any = (dispatch: Dispatch<any>) => {
     return {
         onFaceSelected: id => {
+            var file = store.getState().currentImage;
+
+            if( file == null )
+                return;
+                
+            //alert(file + ': ' + id)
+            files.approveFile(file, id);
+            
             var next = interop.getNextImage();
             dispatch(setImage(next))
         },

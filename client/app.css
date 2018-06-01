@@ -1,8 +1,9 @@
 .panel-fullscreen {
-    width: 500px;
+    width: auto;
+    height: auto;
 }
 
-.imagebox .imagebox-img {
+ad.imagebox .imagebox-img {
     display: block;
     width: 100%;
     height: auto;
