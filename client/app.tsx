@@ -6,15 +6,25 @@ import * as interop from './interop.js';
 class App extends React.Component<{},{}> {    
    render() {
         var imgList = interop.getImageList();
+        var mytags = [{id:'-1', image:'bad.png'}, {id:'1', image:'good.png'}];
 
         return <div className="panelbox">
-                    <PanelFaces/>
+                    <PanelFaces tags={mytags}/>
+
+
                     {imgList.map( (img, i) =>
-                        <ImageBox key={i} url={img} onClick={()=>alert(i)} />
+                        <PanelFullScreen>
+                           <ImageBox key={i} url={img} onClick={()=>alert(i)} /> 
+                        </PanelFullScreen>
                     )} 
                 </div>
-        
    }
+}
+
+class PanelFullScreen extends React.Component<{},{}> {
+    render() {
+        return <div className="panel-fullscreen">{this.props.children}</div>
+    }
 }
 
 interface ImageBoxProps {
@@ -22,12 +32,21 @@ interface ImageBoxProps {
     onClick: any;
 }
 
-class PanelFaces extends React.Component<{},{}> {
+interface PanelFacesProps {
+    tags: TagFaceProps[]
+}
+
+class PanelFaces extends React.Component<PanelFacesProps,{}> {
     render() {        
         var position = {
             right: 0,
             bottom: 0
         };
+
+        return <div className="panel-faces" style={position}>{
+            this.props.tags.map( face => <TagFace id={face.id} image={face.image}/>)
+        }</div>
+
         return <div className="panel-faces" style={position}><TagFace id="bad" image="bad.png"/><TagFace id="good" image="good.png"/></div>
     }
 }
