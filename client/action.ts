@@ -1,7 +1,5 @@
-// import { createStore, Dispatch } from 'redux';
-// import { connect, Provider } from 'react-redux';
-// import * as React from 'react';
-// import * as ReactDOM from 'react-dom';
+import ReactRedux = require('react-redux');
+import Redux = require('redux');
 
 import * as interop from './interop.js';
 
@@ -45,7 +43,7 @@ const mapStateToProps: any = (state: AppState) => {
     };
 }
 
-const mapDispatchToProps: any = (dispatch: Dispatch<any>) => {
+const mapDispatchToProps: any = (dispatch: ReactRedux.Dispatch<any>) => {
     return {
         onFaceSelected: id => {
             var file = store.getState().currentImage;

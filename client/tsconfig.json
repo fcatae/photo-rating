@@ -5,7 +5,10 @@
         "noImplicitAny": false,
         "sourceMap": true,
         "jsx": "react",
-        "outDir": "bin/"
+        "outDir": "bin/",
+        "types": [
+            "react"
+        ]
     },
     "exclude": [
         "node_modules"

@@ -1,4 +1,5 @@
-// var fs = require('fs');
+/// <reference types="node"/>
+
 import * as fs from 'fs';
 import * as path from 'path';
 import { Z_SYNC_FLUSH } from 'zlib';

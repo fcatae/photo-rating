@@ -1,6 +1,4 @@
-// import * as React from 'react';
-// import * as ReactDOM from 'react-dom';
-// import { Provider } from 'react-redux';
+/// <reference path="html_globals.d.ts" />
 
 import * as interop from './interop.js';
 import * as action from './action.js';
