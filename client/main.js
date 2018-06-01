@@ -51,9 +51,27 @@ function createMainWindow() {
       win.toggleDevTools();
     }
 
-    var menu = electron.Menu.getApplicationMenu();
-    menu.append(new electron.MenuItem({label: 'MenuItem1', click() { console.log('item 1 clicked') }}))
-    electron.Menu.setApplicationMenu(menu)
-    
+    createMenuItems();
+
     return win;
+}
+
+function createMenuItems() {
+  var menu = electron.Menu.getApplicationMenu();
+
+  menu.append(new electron.MenuItem({label: 'Restart', click: onRestartMenuClick}))
+
+  electron.Menu.setApplicationMenu(menu)
+
+  function onRestartMenuClick() {
+    var folder = electron.dialog.showOpenDialog({properties: ['openDirectory']});
+
+    if( folder != null && folder.length>0 ) {
+      restartApplication(folder[0]);
+    }    
+  }
+
+  function restartApplication(folder) {    
+    console.log(folder);
+  }
 }
