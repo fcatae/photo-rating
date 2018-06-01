@@ -1,9 +1,11 @@
-export function hello() {
-    console.log('hello world');
+// create the queue
+var _queue = [];
+function insertImageIntoQueue(img) {
+    _queue.push(img);
 }
 
-export function getImageList() {
-    // random images from docs.microsoft.com
+// random images from docs.microsoft.com
+function createImageList() {
     return [
         'https://docs.microsoft.com/en-us/azure/iot-hub/media/iot-hub-get-started-e2e-diagram/6.png',
         'https://docs.microsoft.com/fr-fr/azure/machine-learning/studio/media/what-is-machine-learning/machine-learning-service-parts-and-workflow.png',
@@ -13,3 +15,13 @@ export function getImageList() {
         'https://docs.microsoft.com/en-us/azure/machine-learning/team-data-science-process/media/cortana-analytics-playbook-predictive-maintenance/example-solution-architecture-for-predictive-maintenance.png'
     ];
 }
+
+// insert images into the queue
+createImageList().map( insertImageIntoQueue );
+
+// PUBLIC
+export function getNextImage(): string {
+    var next = _queue.shift();
+    return next;
+}
+

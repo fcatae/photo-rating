@@ -5,18 +5,15 @@ import * as interop from './interop.js';
 
 class App extends React.Component<{},{}> {    
    render() {
-        var imgList = interop.getImageList();
+        var curImg = interop.getNextImage();
+        
         var mytags = [{id:'-1', image:'bad.png'}, {id:'1', image:'good.png'}];
 
         return <div className="panelbox">
                     <PanelFaces tags={mytags}/>
-
-
-                    {imgList.map( (img, i) =>
-                        <PanelFullScreen>
-                           <ImageBox key={i} url={img} onClick={()=>alert(i)} /> 
-                        </PanelFullScreen>
-                    )} 
+                    <PanelFullScreen>
+                        <ImageBox url={curImg} /> 
+                    </PanelFullScreen>
                 </div>
    }
 }
@@ -25,11 +22,6 @@ class PanelFullScreen extends React.Component<{},{}> {
     render() {
         return <div className="panel-fullscreen">{this.props.children}</div>
     }
-}
-
-interface ImageBoxProps {
-    url: string;
-    onClick: any;
 }
 
 interface PanelFacesProps {
@@ -62,13 +54,14 @@ class TagFace extends React.Component<TagFaceProps,{}> {
     }
 }
 
+interface ImageBoxProps {
+    url: string;
+}
+
 class ImageBox extends React.Component<ImageBoxProps,{}> {
     render() {
-        return <div className='imagebox'><img className="imagebox-img" src={this.props.url} onClick={this.props.onClick} /></div>;
+        return <div className='imagebox'><img className="imagebox-img" src={this.props.url} /></div>;
     }
 }
 
 ReactDOM.render(<App/>, document.getElementById('app'));
-
-var count = interop.getImageList().length;
-console.log('image count += ' + count);
