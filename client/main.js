@@ -33,7 +33,6 @@ app.on('window-all-closed', function () {
   }
 })
 
-
 function createMainWindow() {
 
     let win = new BrowserWindow({show: false });
@@ -48,7 +47,9 @@ function createMainWindow() {
       win.show()
     })
 
-    win.toggleDevTools();
+    if( process.env.PHOTO_RATING_EXECUTABLE == null ){
+      win.toggleDevTools();
+    }
 
     return win;
 }

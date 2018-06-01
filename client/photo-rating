@@ -1,0 +1,9 @@
+#!/usr/bin/env node
+const electron = require('electron')
+const proc = require('child_process')
+const path = require('path')
+
+var appFolderPath = path.dirname(process.argv[1])
+
+// spawn Electron
+const child = proc.spawn(electron, [appFolderPath], {env: { PHOTO_RATING_EXECUTABLE: 1 }})
