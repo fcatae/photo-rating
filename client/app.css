@@ -1,0 +1,9 @@
+.imagebox {
+    width: 500px;
+}
+
+.imagebox .imagebox-img {
+    display: block;
+    width: 100%;
+    height: auto;
+}
