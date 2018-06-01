@@ -1,16 +1,27 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import { Provider } from 'react-redux';
 
 import * as interop from './interop.js';
+import * as action from './action.js';
 
-class App extends React.Component<{},{}> {    
-   render() {
-        var curImg = interop.getNextImage();
+interface AppProps {
+    currentImage?: string
+    onFaceSelected?: Function
+    onInit?: Function
+}
+
+export class App extends React.Component<AppProps,{}> {    
+    componentDidMount() {
+        this.props.onInit();
+    }
+    render() {
+        var curImg = this.props.currentImage;
         
-        var mytags = [{id:'-1', image:'bad.png'}, {id:'1', image:'good.png'}];
+        var mytags = [{id:'BAD', image:'bad.png'}, {id:'GOOD', image:'good.png'}];
 
         return <div className="panelbox">
-                    <PanelFaces tags={mytags}/>
+                    <PanelFaces tags={mytags} onFaceSelected={this.props.onFaceSelected}/>
                     <PanelFullScreen>
                         <ImageBox url={curImg} /> 
                     </PanelFullScreen>
@@ -25,7 +36,8 @@ class PanelFullScreen extends React.Component<{},{}> {
 }
 
 interface PanelFacesProps {
-    tags: TagFaceProps[]
+    tags: ITagFace[],
+    onFaceSelected: Function
 }
 
 class PanelFaces extends React.Component<PanelFacesProps,{}> {
@@ -36,21 +48,27 @@ class PanelFaces extends React.Component<PanelFacesProps,{}> {
         };
 
         return <div className="panel-faces" style={position}>{
-            this.props.tags.map( face => <TagFace id={face.id} image={face.image}/>)
+            this.props.tags.map( face => <TagFace key={face.id} id={face.id} image={face.image} onFaceSelected={this.props.onFaceSelected}/>)
         }</div>
-
-        return <div className="panel-faces" style={position}><TagFace id="bad" image="bad.png"/><TagFace id="good" image="good.png"/></div>
     }
+}
+
+interface ITagFace {
+    id: string;
+    image: string;
 }
 
 interface TagFaceProps {
     id: string;
     image: string;
+    onFaceSelected: Function
 }
 
 class TagFace extends React.Component<TagFaceProps,{}> {
+    
     render() {
-        return <div className="facebox"><img className="facebox-img" src={`resources/${this.props.image}`} onClick={()=>alert(this.props.id)} /></div>;
+        var that = this;
+        return <div className="facebox"><img className="facebox-img" src={`resources/${that.props.image}`} onClick={() => that.props.onFaceSelected(that.props.id)} /></div>;
     }
 }
 
@@ -64,4 +82,12 @@ class ImageBox extends React.Component<ImageBoxProps,{}> {
     }
 }
 
-ReactDOM.render(<App/>, document.getElementById('app'));
+//ReactDOM.render(<PhoneApp/>, document.getElementById('app'));
+
+var store = action.Store;
+
+var PhotoApp = action.ConnectPhotoApp(App);
+
+ReactDOM.render(<Provider store={store}>
+    <PhotoApp/>
+  </Provider>, document.getElementById('app'));

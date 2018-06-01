@@ -13,15 +13,16 @@
   "repository": "",
   "author": "GitHub",
   "devDependencies": {
+    "@types/react": "=16.3.14",
+    "@types/react-dom": "=16.0.5",
+    "@types/react-redux": "^6.0.0",
     "electron": "~2.0.2",
     "electron-packager": "~12.1.0",
     "png-to-ico": "^1.0.2",
     "react": "^16.3.0",
     "react-dom": "^16.3.0",
-    "@types/react": "=16.3.14",
-    "@types/react-dom": "=16.0.5",
+    "react-redux": "^5.0.7",
     "typescript": "^2.9.1"
   },
-  "dependencies": {
-  }
+  "dependencies": {}
 }

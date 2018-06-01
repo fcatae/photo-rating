@@ -8,11 +8,14 @@
   <body>
     <script src="lib/react.js"></script>
     <script src="lib/react-dom.js"></script> 
+    <script src="lib/react-redux.js"></script> 
 
     <div id="app"></div>
 
     <script>
-        require('./bin/app.js');
+        var action = require('./bin/action.js');
+        var app = require('./bin/app.js');
+       
     </script>
 
   </body>
