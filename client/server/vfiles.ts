@@ -46,8 +46,12 @@ export class VFolder {
     }
 
     syncFile(file: VFile) : void {
-        // fs.renameSync(file.initialPath, file.virtualPath);
-        // file.initialPath = file.virtualPath;
+        if( process.env.PHOTO_RATING_EXECUTABLE == null ){
+            return;
+          }
+
+        fs.renameSync(file.sourcePath, file.futurePath);
+        file.sourcePath = file.futurePath;
     }
 }
 
