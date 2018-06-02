@@ -35,20 +35,51 @@ export class VFolder {
     }
 
     changeFileTag(file: VFile, tag: string) : void {
-        var comp1 = this.folderPath;
-        var comp2 = tag;
-        var comp3 = file.filename;
-
-        var virtualPath = path.join(comp1, comp2, comp3);
-
-        file.futurePath = virtualPath;
-        file.tag = tag;
+        var newfolder = path.join(this.folderPath, tag);
+        file.move(newfolder);
     }
 
     syncFile(file: VFile) : void {
+        file.sync();
+    }
+}
+
+interface VFileOptions {
+    id: number;
+    filename: string;
+    sourcePath: string;
+    tag: string;
+}
+
+export class VFile implements VFileOptions {
+    id: number;
+    filename: string;
+    sourcePath: string;
+    tag: string;
+    private futurePath: string;
+    
+    constructor(props: VFileOptions) {
+        this.id = props.id;
+        this.filename = props.filename;
+        props.sourcePath = this.sourcePath;
+        this.tag = props.tag;
+    }
+
+    move(newfolder: string) {        
+        var newpath = path.join(newfolder, this.filename);
+        this.futurePath = newpath;
+    }
+    
+    sync() : void {
+        var file = this;
+
         if( process.env.PHOTO_RATING_EXECUTABLE == null ){
             return;
-          }
+        }
+
+        if( file.futurePath == null || file.futurePath == file.sourcePath ) {
+            return;
+        }
 
         var folder = path.dirname(file.futurePath);
         if( !fs.existsSync(folder) ) {
@@ -58,12 +89,4 @@ export class VFolder {
         fs.renameSync(file.sourcePath, file.futurePath);
         file.sourcePath = file.futurePath;
     }
-}
-
-export class VFile {
-    id: number;
-    filename: string;
-    sourcePath: string;
-    tag: string;
-    futurePath: string;
 }

@@ -37,13 +37,12 @@ export function createVFolder(folderName?: string) : VFolder {
     var files = enumerateImageFiles(folderName);
 
     var vfiles : VFile[] = files.map( (f, i) => { 
-        return  {
+        return new VFile({
                     id: i,
                     filename: path.basename(f),
-                    sourcePath: f,
-                    futurePath: f,
+                    sourcePath: f,                    
                     tag: null
-                }                
+                });            
         });
 
     return new VFolder(folderName, vfiles);
