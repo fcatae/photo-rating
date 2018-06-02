@@ -6,9 +6,10 @@ import { Z_SYNC_FLUSH } from 'zlib';
 import { VFolder, VFile } from './vfiles.js'
 
 var home = process.env.userprofile
-var pics = `${home}\\Pictures`
+var defaultPicturesFolder = `${home}\\Pictures`
 
-var files = enumerateImageFiles(pics);          
+// var pics = `${home}\\Pictures`
+// var files = enumerateImageFiles(pics);          
 
 function enumerateImageFiles(folder: string) {
     var files = fs
@@ -30,31 +31,33 @@ function isImage(file: string) : boolean {
 }
 
 function appendFolderName(folder: string) {
-    return (file: string) => folder + '\\' + file;
+    return (file: string) => path.join(folder, file);
 }
 
-function moveFile(src: string, dest: string) {    
-    fs.renameSync(src, dest);
-}
+// function moveFile(src: string, dest: string) {    
+//     fs.renameSync(src, dest);
+// }
 
-export function approveFile(file: string, tag: string) {
-    var folder = pics + '\\' + tag;
+// export function approveFile(file: string, tag: string) {
+//     var folder = pics + '\\' + tag;
 
-    if( !fs.existsSync(folder) ) {
-        fs.mkdirSync(folder);
-    }
+//     if( !fs.existsSync(folder) ) {
+//         fs.mkdirSync(folder);
+//     }
     
-    var basename = path.parse(file).base;
-    var newname = folder + '\\' + basename;
+//     var basename = path.parse(file).base;
+//     var newname = folder + '\\' + basename;
 
-    fs.renameSync(file, newname);
-}
+//     fs.renameSync(file, newname);
+// }
 
-export function createImageList() {
-    return files;
-}
+// export function createImageList() {
+//     return files;
+// }
 
-export function createVFolder(folderName: string) : VFolder {
+export function createVFolder(folderName?: string) : VFolder {
+    folderName = folderName || defaultPicturesFolder;
+
     var files = enumerateImageFiles(folderName);
 
     var vfiles : VFile[] = files.map( (f, i) => { 

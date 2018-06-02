@@ -1,34 +1,28 @@
 import * as files from './server/files.js';
 
-// create the queue
-var _queue = [];
-function insertImageIntoQueue(img) {
-    _queue.push(img);
-}
+import { createVFolder } from './server/files.js';
 
-// random images from docs.microsoft.com
-// function createImageList() {
-//     return [
-//         'https://docs.microsoft.com/en-us/azure/iot-hub/media/iot-hub-get-started-e2e-diagram/6.png',
-//         'https://docs.microsoft.com/fr-fr/azure/machine-learning/studio/media/what-is-machine-learning/machine-learning-service-parts-and-workflow.png',
-//         'https://docs.microsoft.com/en-us/azure/machine-learning/team-data-science-process/media/cortana-analytics-playbook-vehicle-telemetry/fig1-vehicle-telemetry-annalytics-solution-architecture.png',
-//         'https://docs.microsoft.com/en-us/visualstudio/ai/media/about/gallery.png',
-//         'https://docs.microsoft.com/pt-br/azure/machine-learning/studio/media/what-is-machine-learning/machine-learning-cortana-intelligence-gallery.png',
-//         'https://docs.microsoft.com/en-us/azure/machine-learning/team-data-science-process/media/cortana-analytics-playbook-predictive-maintenance/example-solution-architecture-for-predictive-maintenance.png'
-//     ];
-// }
+var vfolder = createVFolder();
 
-import { createImageList } from './server/files.js';
-
-// insert images into the queue
-createImageList().map( insertImageIntoQueue );
+// // insert images into the queue
+// createImageList().map( insertImageIntoQueue );
 
 // PUBLIC
+export function resetVFolder(folder: string) {
+    vfolder = createVFolder(folder);
+}
+
 export function getNextImage(): string {
-    var next = _queue.shift();
-    return next;
+    var nextV = vfolder.getNext();
+    if( nextV == null ) {
+        return null;
+    }
+    return nextV.virtualPath;
 }
 
 export function approveFile(file: string, tag: string) {
-    return files.approveFile(file, tag);
+    var vfile = vfolder.getCurrent();
+    vfolder.changeFileTag(vfile, tag);
+    //vfolder.syncFile(vfile);
+    //return files.approveFile(file, tag);
 }

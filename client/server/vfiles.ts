@@ -11,7 +11,7 @@ export class VFolder {
     constructor(folderPath: string, fileList: VFile[]) {
         this.folderPath = folderPath;
         this.fileList = fileList;
-        this.curFileIdx = 0;
+        this.curFileIdx = -1;
         this.totalFileIdx = fileList.length;
     }
 
