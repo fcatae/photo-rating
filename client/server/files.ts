@@ -67,5 +67,5 @@ export function createVFolder(folderName: string) : VFolder {
                 }                
         });
 
-    return new VFolder(vfiles);
+    return new VFolder(folderName, vfiles);
 }

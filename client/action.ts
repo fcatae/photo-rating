@@ -1,7 +1,4 @@
-/// <reference path="./html_globals.d.ts"/>
-
-// import ReactRedux = require('react-redux');
-// import Redux = require('redux');
+/// <reference path="html_globals.d.ts" />
 
 import * as interop from './interop.js';
 
@@ -45,7 +42,7 @@ const mapStateToProps: any = (state: AppState) => {
     };
 }
 
-const mapDispatchToProps: any = (dispatch: ReactRedux.Dispatch<any>) => {
+const mapDispatchToProps: any = (dispatch) => {
     return {
         onFaceSelected: id => {
             var file = store.getState().currentImage;
