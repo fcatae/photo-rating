@@ -6,8 +6,8 @@ import { VFile } from './server/vfiles.js';
 var vfolder = createVFolderTags(null, [null]);
 
 // PUBLIC
-export function resetVFolder(folder: string) {
-    vfolder = createVFolderTags(folder, [null]);
+export function resetVFolder(folder: string, tags: string[]) {
+    vfolder = createVFolderTags(folder, tags.concat([null]) );
 }
 
 export function getPrevImageVFile(): VFile {

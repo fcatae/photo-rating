@@ -31,14 +31,14 @@ function appendFolderName(folder: string) {
 }
 
 export function createVFolderTags(folderName: string, tags: string[]) : VFolder {
+    folderName = folderName || defaultPicturesFolder;
+    
     var folders = tags.map(t => createVFolder(folderName, t));
 
     return VFolder.createTreeFrom(folderName, folders);
 }
 
 function createVFolder(folderName: string, tag: string) : VFolder {
-    folderName = folderName || defaultPicturesFolder;
-    
     var folderTag = path.join(folderName, tag || '');
 
     var files = enumerateImageFiles(folderTag);

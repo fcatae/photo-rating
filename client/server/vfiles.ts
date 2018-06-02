@@ -16,8 +16,8 @@ export class VFolder {
     }
 
     public static createTreeFrom(folderName: string, folders: VFolder[]) : VFolder {
-        if(folders.length == 0) {
-            throw 'no folders';            
+        if(folderName == null || folders.length == 0) {
+            throw 'invalid arguments';            
         }
 
         var filelist = flatten(folders.map(vf => vf.fileList));
@@ -56,6 +56,7 @@ export class VFolder {
     changeFileTag(file: VFile, tag: string) : void {
         var newfolder = path.join(this.folderPath, tag);
         file.move(newfolder);
+        file.tag = tag;
     }
 
     syncFile(file: VFile) : void {
