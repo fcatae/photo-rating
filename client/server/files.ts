@@ -2,7 +2,6 @@
 
 import * as fs from 'fs';
 import * as path from 'path';
-import { Z_SYNC_FLUSH } from 'zlib';
 import { VFolder, VFile } from './vfiles.js'
 
 var home = process.env.userprofile
@@ -55,38 +54,3 @@ function createVFolder(folderName: string, tag: string) : VFolder {
 
     return new VFolder(folderName, vfiles);
 }
-
-
-// export function createVFolder(folderName?: string) : VFolder {
-//     folderName = folderName || defaultPicturesFolder;
-
-//     var files = enumerateImageFiles(folderName);
-
-//     var vfiles : VFile[] = files.map( (f, i) => { 
-//         return new VFile({
-//                     id: i,
-//                     filename: path.basename(f),
-//                     sourcePath: f,                    
-//                     tag: null
-//                 });            
-//         });
-
-//     return new VFolder(folderName, vfiles);
-// }
-
-// export function createVFolderFlat(folderName?: string) : VFolder {
-//     folderName = folderName || defaultPicturesFolder;
-
-//     var files = enumerateImageFiles(folderName);
-
-//     var vfiles : VFile[] = files.map( (f, i) => { 
-//         return new VFile({
-//                     id: i,
-//                     filename: path.basename(f),
-//                     sourcePath: f,                    
-//                     tag: null
-//                 });            
-//         });
-
-//     return new VFolder(folderName, vfiles);
-// }
