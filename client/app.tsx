@@ -25,9 +25,8 @@ export class App extends React.Component<AppProps,{}> {
             {id:':<', image:'prev.png'}];
 
         var mytags = [             
-            {id:':none1', image:'none.png'},
             {id:'SUPERB', image:'superb.png'}, 
-            {id:':none2', image:'none.png'}, 
+            {id:':none', image:'none.png'}, 
             {id:'GOOD', image:'good.png'}, 
             {id:'BAD', image:'bad.png'},
             {id:':>', image:'next.png'}

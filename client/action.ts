@@ -81,6 +81,11 @@ const mapStateToProps: any = (state: AppState) => {
 const mapDispatchToProps: any = (dispatch) => {
     return {
         onFaceSelected: (id: string) => {
+
+            if( id == ":none") {
+                dispatch(setImageTag(null))  
+            }
+
             if( id != null && id[0] == ':' ) {
                 if( id.length > 1 && id[1] == '<' ) {
                     var next = interop.getPrevImageVFile();
