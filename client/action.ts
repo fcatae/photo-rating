@@ -136,3 +136,6 @@ export const ConnectPhotoApp = ReactRedux.connect(
 );
 
 export const Store = store;
+
+// Init
+interop.initVFolder(null, [null, 'BAD', 'GOOD', 'SUPERB']);

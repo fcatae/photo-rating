@@ -1,13 +1,13 @@
 import * as files from './server/files.js';
 
 import { createVFolderTags } from './server/files.js';
-import { VFile } from './server/vfiles.js';
+import { VFile, VFolder } from './server/vfiles.js';
 
-var vfolder = createVFolderTags(null, [null]);
+var vfolder: VFolder;
 
 // PUBLIC
-export function resetVFolder(folder: string, tags: string[]) {
-    vfolder = createVFolderTags(folder, tags.concat([null]) );
+export function initVFolder(folder: string, tags: string[]) {
+    vfolder = createVFolderTags(folder, tags.concat([null]));
 }
 
 export function getPrevImageVFile(): VFile {
