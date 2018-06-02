@@ -1,6 +1,6 @@
 {
   "name": "photo-rating-app",
-  "version": "1.0.4",
+  "version": "1.0.5",
   "description": "Description",
   "main": "main.js",
   "bin": {
