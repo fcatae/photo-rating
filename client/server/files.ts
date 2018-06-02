@@ -3,17 +3,22 @@
 import * as fs from 'fs';
 import * as path from 'path';
 import { Z_SYNC_FLUSH } from 'zlib';
+import { VFolder, VFile } from './vfiles.js'
 
 var home = process.env.userprofile
 var pics = `${home}\\Pictures`
 
-var files = fs
-            .readdirSync(pics)
-            .map(appendFolderName(pics))
-            .map(s => s.toLowerCase())
-            .filter(isImage)
+var files = enumerateImageFiles(pics);          
 
-files.forEach(f => console.log(f))            
+function enumerateImageFiles(folder: string) {
+    var files = fs
+                .readdirSync(folder)
+                .map(appendFolderName(folder))
+                .map(s => s.toLowerCase())
+                .filter(isImage)
+
+    return files;
+}
 
 function isNotDirectory(file: string) : boolean {
     var stat = fs.statSync(file);
@@ -47,4 +52,20 @@ export function approveFile(file: string, tag: string) {
 
 export function createImageList() {
     return files;
+}
+
+export function createVFolder(folderName: string) : VFolder {
+    var files = enumerateImageFiles(folderName);
+
+    var vfiles : VFile[] = files.map( (f, i) => { 
+        return  {
+                    id: i.toString(16),
+                    filename: path.basename(f),
+                    initialPath: f,
+                    virtualPath: f,
+                    tag: null
+                }                
+        });
+
+    return new VFolder(vfiles);
 }

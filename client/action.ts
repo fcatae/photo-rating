@@ -1,5 +1,7 @@
-import ReactRedux = require('react-redux');
-import Redux = require('redux');
+/// <reference path="./html_globals.d.ts"/>
+
+// import ReactRedux = require('react-redux');
+// import Redux = require('redux');
 
 import * as interop from './interop.js';
 

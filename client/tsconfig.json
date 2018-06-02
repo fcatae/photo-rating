@@ -6,9 +6,10 @@
         "sourceMap": true,
         "jsx": "react",
         "outDir": "bin/",
-        "types": [
-            "react"
-        ]
+        "baseUrl": ".",
+        "paths": {
+            "server": ["./server"]
+        }
     },
     "exclude": [
         "node_modules"
