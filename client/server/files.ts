@@ -62,10 +62,10 @@ export function createVFolder(folderName?: string) : VFolder {
 
     var vfiles : VFile[] = files.map( (f, i) => { 
         return  {
-                    id: i.toString(16),
+                    id: i,
                     filename: path.basename(f),
-                    initialPath: f,
-                    virtualPath: f,
+                    sourcePath: f,
+                    futurePath: f,
                     tag: null
                 }                
         });

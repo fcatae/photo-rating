@@ -9,8 +9,8 @@ export class VFolder {
     private totalFileIdx: number;
     
     constructor(folderPath: string, fileList: VFile[]) {
-        this.folderPath = folderPath;
         this.fileList = fileList;
+        this.folderPath = folderPath;
         this.curFileIdx = -1;
         this.totalFileIdx = fileList.length;
     }
@@ -41,19 +41,20 @@ export class VFolder {
 
         var virtualPath = path.join(comp1, comp2, comp3);
 
-        file.virtualPath = virtualPath;
+        file.futurePath = virtualPath;
+        file.tag = tag;
     }
 
     syncFile(file: VFile) : void {
-        fs.renameSync(file.initialPath, file.virtualPath);
-        file.initialPath = file.virtualPath;
+        // fs.renameSync(file.initialPath, file.virtualPath);
+        // file.initialPath = file.virtualPath;
     }
 }
 
 export class VFile {
-    id: string;
+    id: number;
     filename: string;
-    initialPath: string;
-    virtualPath: string;
+    sourcePath: string;
     tag: string;
+    futurePath: string;
 }
