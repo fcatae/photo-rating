@@ -1,6 +1,5 @@
 /// <reference path="html_globals.d.ts" />
 
-import {createVFolder} from './server/files.js';
 import * as interop from './interop.js';
 import * as action from './action.js';
 

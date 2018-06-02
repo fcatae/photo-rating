@@ -50,6 +50,11 @@ export class VFolder {
             return;
           }
 
+        var folder = path.dirname(file.futurePath);
+        if( !fs.existsSync(folder) ) {
+            fs.mkdirSync(folder);
+        }
+
         fs.renameSync(file.sourcePath, file.futurePath);
         file.sourcePath = file.futurePath;
     }
