@@ -1,8 +1,6 @@
 /// <reference path="html_globals.d.ts" />
 
 import {createVFolder} from './server/files.js';
-var vf = createVFolder('c:\\users\\fcatae\\pictures');
-console.log(JSON.stringify(vf))
 import * as interop from './interop.js';
 import * as action from './action.js';
 
