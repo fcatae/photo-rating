@@ -93,9 +93,9 @@ export class VFile implements VFileOptions {
     sync() : void {
         var file = this;
 
-        if( process.env.PHOTO_RATING_EXECUTABLE == null ){
-            return;
-        }
+        // if( process.env.PHOTO_RATING_EXECUTABLE == null ){
+        //     return;
+        // }
 
         if( file.futurePath == null || file.futurePath == file.sourcePath ) {
             return;
