@@ -8,9 +8,6 @@ import { VFolder, VFile } from './vfiles.js'
 var home = process.env.userprofile
 var defaultPicturesFolder = `${home}\\Pictures`
 
-// var pics = `${home}\\Pictures`
-// var files = enumerateImageFiles(pics);          
-
 function enumerateImageFiles(folder: string) {
     var files = fs
                 .readdirSync(folder)
@@ -33,27 +30,6 @@ function isImage(file: string) : boolean {
 function appendFolderName(folder: string) {
     return (file: string) => path.join(folder, file);
 }
-
-// function moveFile(src: string, dest: string) {    
-//     fs.renameSync(src, dest);
-// }
-
-// export function approveFile(file: string, tag: string) {
-//     var folder = pics + '\\' + tag;
-
-//     if( !fs.existsSync(folder) ) {
-//         fs.mkdirSync(folder);
-//     }
-    
-//     var basename = path.parse(file).base;
-//     var newname = folder + '\\' + basename;
-
-//     fs.renameSync(file, newname);
-// }
-
-// export function createImageList() {
-//     return files;
-// }
 
 export function createVFolder(folderName?: string) : VFolder {
     folderName = folderName || defaultPicturesFolder;
