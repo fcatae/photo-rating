@@ -19,17 +19,20 @@ export class App extends React.Component<AppProps,{}> {
     render() {
         var curImg = this.props.currentImage;
         
-        var mytags = [ 
-            {id:':<', image:'prev.png'},
-            {id:':>', image:'next.png'},
+        var mytagsLeft = [ 
+            {id:':<', image:'prev.png'}];
+
+        var mytags = [             
             {id:':none1', image:'none.png'},
             {id:'SUPERB', image:'superb.png'}, 
             {id:':none2', image:'none.png'}, 
             {id:'GOOD', image:'good.png'}, 
-            {id:'BAD', image:'bad.png'}];
+            {id:'BAD', image:'bad.png'},
+            {id:':>', image:'next.png'}];
 
         return <div className="panelbox">
-                    <PanelFaces tags={mytags} onFaceSelected={this.props.onFaceSelected}/>
+                    <PanelFaces position="left" tags={mytagsLeft} onFaceSelected={this.props.onFaceSelected}/>
+                    <PanelFaces position="right" tags={mytags} onFaceSelected={this.props.onFaceSelected}/>
                     <PanelFullScreen>
                         <ImageBox url={curImg} /> 
                     </PanelFullScreen>
@@ -44,16 +47,18 @@ class PanelFullScreen extends React.Component<{},{}> {
 }
 
 interface PanelFacesProps {
+    position?: string,
     tags: ITagFace[],
     onFaceSelected: Function
 }
 
 class PanelFaces extends React.Component<PanelFacesProps,{}> {
     render() {        
-        var position = {
-            right: 0,
-            bottom: 0
-        };
+        var positionRight = { right: 0, bottom: 0 };
+        var positionLeft = { left: 0, bottom: 0 };
+        
+        // very simplistic
+        var position = (this.props.position == 'left' ) ? positionLeft : positionRight;
 
         return <div className="panel-faces" style={position}>{
             this.props.tags.map( face => <TagFace key={face.id} id={face.id} image={face.image} onFaceSelected={this.props.onFaceSelected}/>)
