@@ -15,6 +15,25 @@ export class VFolder {
         this.totalFileIdx = fileList.length;
     }
 
+    public static createTreeFrom(folderName: string, folders: VFolder[]) : VFolder {
+        if(folders.length == 0) {
+            throw 'no folders';            
+        }
+
+        var filelist = flatten(folders.map(vf => vf.fileList));
+
+        var renumeredFilelist = filelist.map( (f,i) => { f.id = i; return f; });
+
+        return new VFolder(folderName, renumeredFilelist);
+
+        // https://stackoverflow.com/questions/10865025/merge-flatten-an-array-of-arrays-in-javascript/39000004#39000004
+        function flatten(arr) {
+            return arr.reduce(function (flat, toFlatten) {
+              return flat.concat(Array.isArray(toFlatten) ? flatten(toFlatten) : toFlatten);
+            }, []);
+        }
+    }
+
     getPrevious() : VFile {
         this.curFileIdx = (this.curFileIdx >= 0) ? this.curFileIdx - 1 : -1;
         return this.getCurrent();    
@@ -61,7 +80,7 @@ export class VFile implements VFileOptions {
     constructor(props: VFileOptions) {
         this.id = props.id;
         this.filename = props.filename;
-        props.sourcePath = this.sourcePath;
+        this.sourcePath = props.sourcePath;
         this.tag = props.tag;
     }
 

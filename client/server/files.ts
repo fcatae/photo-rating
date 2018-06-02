@@ -31,19 +31,62 @@ function appendFolderName(folder: string) {
     return (file: string) => path.join(folder, file);
 }
 
-export function createVFolder(folderName?: string) : VFolder {
-    folderName = folderName || defaultPicturesFolder;
+export function createVFolderTags(folderName: string, tags: string[]) : VFolder {
+    var folders = tags.map(t => createVFolder(folderName, t));
 
-    var files = enumerateImageFiles(folderName);
+    return VFolder.createTreeFrom(folderName, folders);
+}
+
+function createVFolder(folderName: string, tag: string) : VFolder {
+    folderName = folderName || defaultPicturesFolder;
+    
+    var folderTag = path.join(folderName, tag || '');
+
+    var files = enumerateImageFiles(folderTag);
 
     var vfiles : VFile[] = files.map( (f, i) => { 
         return new VFile({
                     id: i,
                     filename: path.basename(f),
                     sourcePath: f,                    
-                    tag: null
+                    tag: tag
                 });            
         });
 
     return new VFolder(folderName, vfiles);
 }
+
+
+// export function createVFolder(folderName?: string) : VFolder {
+//     folderName = folderName || defaultPicturesFolder;
+
+//     var files = enumerateImageFiles(folderName);
+
+//     var vfiles : VFile[] = files.map( (f, i) => { 
+//         return new VFile({
+//                     id: i,
+//                     filename: path.basename(f),
+//                     sourcePath: f,                    
+//                     tag: null
+//                 });            
+//         });
+
+//     return new VFolder(folderName, vfiles);
+// }
+
+// export function createVFolderFlat(folderName?: string) : VFolder {
+//     folderName = folderName || defaultPicturesFolder;
+
+//     var files = enumerateImageFiles(folderName);
+
+//     var vfiles : VFile[] = files.map( (f, i) => { 
+//         return new VFile({
+//                     id: i,
+//                     filename: path.basename(f),
+//                     sourcePath: f,                    
+//                     tag: null
+//                 });            
+//         });
+
+//     return new VFolder(folderName, vfiles);
+// }
