@@ -12,6 +12,14 @@ export function resetVFolder(folder: string) {
     vfolder = createVFolder(folder);
 }
 
+export function getPrevImage(): string {
+    var nextV = vfolder.getPrevious();
+    if( nextV == null ) {
+        return null;
+    }
+    return nextV.virtualPath;
+}
+
 export function getNextImage(): string {
     var nextV = vfolder.getNext();
     if( nextV == null ) {

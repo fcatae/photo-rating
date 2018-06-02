@@ -44,19 +44,26 @@ const mapStateToProps: any = (state: AppState) => {
 
 const mapDispatchToProps: any = (dispatch) => {
     return {
-        onFaceSelected: id => {
+        onFaceSelected: (id: string) => {
             var file = store.getState().currentImage;
 
-            if( file == null )
+            if( id != null && id[0] == ':' ) {
+                if( id.length > 1 && id[1] == '<' ) {
+                    var next = interop.getPrevImage();
+                    dispatch(setImage(next))
+                } else if( id.length > 1 && id[1] == '>' ) {
+                    var next = interop.getNextImage();
+                    dispatch(setImage(next))
+                }
                 return;
-            
-            if(id != '') {
-                //alert(file + ': ' + id)
-                interop.approveFile(file, id);
             }
-            
-            var next = interop.getNextImage();
-            dispatch(setImage(next))
+
+            if(id != null && id[0] != ':' && file != null) {
+                interop.approveFile(file, id);
+
+                var next = interop.getNextImage();
+                dispatch(setImage(next))
+            }
         },
         onInit: () => {
             console.log('init')
