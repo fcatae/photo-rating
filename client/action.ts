@@ -22,6 +22,7 @@ interface AppState {
 
 export const START_APP = 'START_APP';
 export const CONFIG_UPDATE_TAG = 'CONFIG_UPDATE_TAG';
+export const CONFIG_UPDATE_FOLDER = 'CONFIG_UPDATE_FOLDER';
 export const SET_IMAGE = 'SET_IMAGE';
 export const SET_IMAGE_TAG = 'SET_IMAGE_TAG';
 export const SET_IMAGE_FILE = 'SET_IMAGE_FILE';
@@ -38,6 +39,13 @@ export function configUpdateTag(id: string, name: string) {
         type: CONFIG_UPDATE_TAG,
         id: id,
         name: name
+    };
+}
+
+export function configUpdateFolder(folder: string) {
+    return {
+        type: CONFIG_UPDATE_TAG,
+        folder: folder
     };
 }
 
@@ -86,9 +94,9 @@ function photoApp(state : AppState = initialState, action) : AppState {
     };
 }
 
-function photoApp_Folder(state, action) : string {  
-    if( state == null ) {
-        state = interop.getDefaultPicturesFolder();
+function photoApp_Folder(state = interop.getDefaultPicturesFolder(), action) : string {  
+    if( action.type == CONFIG_UPDATE_FOLDER ) {
+        return action.folder;
     }
     
     return state;
