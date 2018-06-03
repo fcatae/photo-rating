@@ -44,7 +44,7 @@ export function configUpdateTag(id: string, name: string) {
 
 export function configUpdateFolder(folder: string) {
     return {
-        type: CONFIG_UPDATE_TAG,
+        type: CONFIG_UPDATE_FOLDER,
         folder: folder
     };
 }
@@ -96,6 +96,7 @@ function photoApp(state : AppState = initialState, action) : AppState {
 
 function photoApp_Folder(state = interop.getDefaultPicturesFolder(), action) : string {  
     if( action.type == CONFIG_UPDATE_FOLDER ) {
+        console.dir(action)
         return action.folder;
     }
     
@@ -253,5 +254,7 @@ export const ConnectPhotoApp = ReactRedux.connect(
 export const Store = store;
 
 interop.listenEvents('appReset', (event, args) => {
+    var folder = args;
+    store.dispatch(configUpdateFolder(folder));
     store.dispatch(startApp('config'));
 });
