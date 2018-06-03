@@ -2,7 +2,8 @@
     width: auto;
     height: auto;
 }
-.panel-faces {
+
+.panel-faces, .panel-faces-config {
     position: fixed;
     display: block;    
 }

@@ -93,9 +93,12 @@ function photoApp_Page(state = "config", action) : string {
 
 function photoApp_Tags(state = initialState_Tags, action) {   
     if( action.type == CONFIG_UPDATE_TAG ) {
-        var tags = { ...initialState_Tags };
-        tags[action.id].name = action.name;
+        var tags = { ...state };
+        tags[action.id] = { ...tags[action.id] };
+        tags[action.id].name = action.name;  
+        return tags; 
     }
+
     return state;
 }
 
@@ -169,8 +172,11 @@ const mapDispatchToProps: any = (dispatch) => {
         },
         onFaceSelected: (id: string) => {
 
+            var file = store.getState().currentFile;
+
             if( id == ":none") {
-                dispatch(setImageTag(null))  
+                interop.changeTag(file, '');
+                dispatch(setImageTag(null))                  
             }
 
             if( id != null && id[0] == ':' ) {
@@ -198,8 +204,6 @@ const mapDispatchToProps: any = (dispatch) => {
 
                 return;
             }
-
-            var file = store.getState().currentFile;
             
             var tag = id;
             if(id != null && tag[0] != ':' && file != null) {

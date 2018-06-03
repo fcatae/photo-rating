@@ -114,7 +114,7 @@ class PanelFacesConfig extends React.Component<PanelFacesConfigProps,{}> {
             default: position = positionRight; break;
         }
 
-        return <div className="panel-faces" style={position}>{
+        return <div className="panel-faces-config" style={position}>{
             this.props.tags.map( face => <TagFaceConfig key={face._id} id={face.id} image={face.image} onFaceSelected={() => {this.onConfigChange(face._id)}}/>)
         }</div>
     }
