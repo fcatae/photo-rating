@@ -51,9 +51,9 @@ export function setImageFile(file: VFile) {
 }
 
 const initialState_Tags : { [id: string] : AppState_Tag } = {            
-    'SUPERB': { name:'SUPERB', image:'superb.png'}, 
-    'GOOD': { name:'GOOD', image:'good.png'}, 
-    'BAD': { name:'BAD', image:'bad.png'},
+    'SUPERB': { name:'s1', image:'superb.png'}, 
+    'GOOD': { name:'g1', image:'good.png'}, 
+    'BAD': { name:'b1', image:'bad.png'},
 }
 
 const initialState: AppState = {
@@ -127,6 +127,10 @@ const mapStateToProps: any = (state: AppState) => {
 const mapDispatchToProps: any = (dispatch) => {
     return {
         onStartApp: () => {
+            // Init
+            var tags = store.getState().tags;
+            interop.initVFolder(null, [null, tags['BAD'].name, tags['GOOD'].name, tags['SUPERB'].name ]);
+
             dispatch(startApp("app"));
         },
         onFaceSelected: (id: string) => {
@@ -186,5 +190,3 @@ export const ConnectPhotoApp = ReactRedux.connect(
 
 export const Store = store;
 
-// Init
-interop.initVFolder(null, [null, 'BAD', 'GOOD', 'SUPERB']);
