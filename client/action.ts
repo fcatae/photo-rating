@@ -3,10 +3,16 @@
 import * as interop from './interop.js';
 import { VFile } from './server/vfiles.js';
 
+interface AppState_Tag {
+    name: string;
+    image: string;    
+}
+
 interface AppState {
     currentImage: string;
     currentTag: string;
     currentFile: VFile;
+    tags: { [id: string] : AppState_Tag };
 }
 
 export const SET_IMAGE = 'SET_IMAGE';
@@ -37,10 +43,22 @@ export function setImageFile(file: VFile) {
 const initialState: AppState = {
     currentImage: null,
     currentTag: null,
-    currentFile: null
+    currentFile: null,
+    tags: {            
+        'SUPERB': { name:'SUPERB', image:'superb.png'}, 
+        'GOOD': { name:'GOOD', image:'good.png'}, 
+        'BAD': { name:'BAD', image:'bad.png'},
+    }
+}  
+
+function photoApp(state : AppState = initialState, action) : AppState {       
+    return { 
+        ...photoApp_File(state, action),
+        tags: state.tags
+    };
 }
 
-function photoApp(state = initialState, action) {    
+function photoApp_File(state = initialState, action) {    
     if( action.type == SET_IMAGE ) {
         return {
             currentImage: action.image,
@@ -74,7 +92,8 @@ store.subscribe( ()=> {
 const mapStateToProps: any = (state: AppState) => {
     return {
         currentImage: state.currentImage,
-        currentTag: state.currentTag
+        currentTag: state.currentTag,
+        tagsConfig: state.tags
     };
 }
 

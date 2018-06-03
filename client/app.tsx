@@ -3,11 +3,32 @@
 import * as interop from './interop.js';
 import * as action from './action.js';
 
+interface AppProps_Tag {
+    name: string;
+    image: string; 
+}
+
 interface AppProps {
     currentImage?: string
     currentTag?: string
     onFaceSelected?: Function
     onInit?: Function
+    tagsConfig?: { [id: string] : AppProps_Tag };
+}
+
+export class AppConfig extends React.Component<AppProps,{}> {
+    render() {
+        var configTags = this.props.tagsConfig;
+        var mytags = [             
+            {id: configTags['SUPERB'].name, image: configTags['SUPERB'].image}, 
+            {id: configTags['GOOD'].name, image: configTags['GOOD'].image}, 
+            {id: configTags['BAD'].name, image: configTags['BAD'].image}
+        ];
+
+        return <div className="configbox">
+        <PanelFacesConfig position="top" tags={mytags} onFaceSelected={this.props.onFaceSelected}/>
+    </div>    
+    }
 }
 
 export class App extends React.Component<AppProps,{}> {    
@@ -21,11 +42,12 @@ export class App extends React.Component<AppProps,{}> {
         var mytagsLeft = [ 
             {id:':<', image:'prev.png'}];
 
+        var configTags = this.props.tagsConfig;
         var mytags = [             
-            {id:'SUPERB', image:'superb.png'}, 
+            {id: configTags['SUPERB'].name, image: configTags['SUPERB'].image}, 
             {id:':none', image:'none.png'}, 
-            {id:'GOOD', image:'good.png'}, 
-            {id:'BAD', image:'bad.png'},
+            {id: configTags['GOOD'].name, image: configTags['GOOD'].image}, 
+            {id: configTags['BAD'].name, image: configTags['BAD'].image},
             {id:':>', image:'next.png'}
         ];
 
@@ -52,6 +74,27 @@ interface PanelFacesProps {
     position?: string,
     tags: ITagFace[],
     onFaceSelected: Function
+}
+
+class PanelFacesConfig extends React.Component<PanelFacesProps,{}> {
+    render() {        
+        var positionTop = { right: '50%', left: '50%', top: 0 };
+        var positionRight = { right: 0, bottom: 0 };
+        var positionLeft = { left: 0, bottom: 0 };
+        
+        // default position
+        var position : any = positionRight;
+
+        switch(this.props.position) {
+            case 'left': position = positionLeft; break;
+            case 'top': position = positionTop; break;
+            default: position = positionRight; break;
+        }
+
+        return <div className="panel-faces" style={position}>{
+            this.props.tags.map( face => <TagFaceConfig key={face.id} id={face.id} image={face.image} onFaceSelected={this.props.onFaceSelected}/>)
+        }</div>
+    }
 }
 
 class PanelFaces extends React.Component<PanelFacesProps,{}> {
@@ -94,6 +137,17 @@ class TagFace extends React.Component<TagFaceProps,{}> {
     }
 }
 
+class TagFaceConfig extends React.Component<TagFaceProps,{}> {
+    
+    render() {
+        var props: TagFaceProps = this.props;
+        return <div className="facebox-config">
+                <img className="facebox-config-img" src={`resources/${props.image}`} onClick={() => props.onFaceSelected(props.id)} />
+                <button className="facebox-config-input">{props.id}</button>
+            </div>;
+    }
+}
+
 interface ImageBoxProps {
     url: string;
 }
@@ -109,7 +163,9 @@ class ImageBox extends React.Component<ImageBoxProps,{}> {
 var store = action.Store;
 
 var PhotoApp = action.ConnectPhotoApp(App);
+var PhotoAppConfig = action.ConnectPhotoApp(AppConfig);
 
 ReactDOM.render(<ReactRedux.Provider store={store}>
     <PhotoApp/>
+    {/* <PhotoAppConfig/> */}
   </ReactRedux.Provider>, document.getElementById('app'));

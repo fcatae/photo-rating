@@ -2,13 +2,6 @@
     width: auto;
     height: auto;
 }
-
-ad.imagebox .imagebox-img {
-    display: block;
-    width: 100%;
-    height: auto;
-}
-
 .panel-faces {
     position: fixed;
     display: block;    
@@ -18,4 +11,22 @@ ad.imagebox .imagebox-img {
     width: 80px;
     height: 80px;
     margin: 30px 10px;
+}
+
+.facebox-config-img {
+    width: 80px;
+    height: 80px;
+    margin: 30px 10px;
+}
+
+.facebox-config-input {
+    width: 80px;
+    margin: 10px 10px;
+}
+
+.facebox-config-img {
+    width: 80px;
+    height: 80px;
+    margin: 0px 10px;
+    margin-top: 40px;
 }
