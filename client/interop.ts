@@ -3,6 +3,11 @@ import * as files from './server/files.js';
 import { createVFolderTags } from './server/files.js';
 import { VFile, VFolder } from './server/vfiles.js';
 
+import { remote } from 'electron';
+
+var home = process.env.userprofile
+var defaultPicturesFolder = `${home}\\Pictures`
+
 var vfolder: VFolder;
 
 // PUBLIC
@@ -21,4 +26,18 @@ export function getNextImageVFile(): VFile {
 export function changeTag(vfile: VFile, tag: string) {
     vfolder.changeFileTag(vfile, tag);
     vfolder.syncFile(vfile);
+}
+
+export function chooseSingleFolder() : string {
+    var dialogProperties : Electron.OpenDialogOptions = {
+        defaultPath: defaultPicturesFolder,
+        properties: ['openDirectory']
+    };
+    var folders = remote.dialog.showOpenDialog(dialogProperties);
+
+    if( folders == null ) {
+        return null;
+    }
+
+    return folders[0];
 }

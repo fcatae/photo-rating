@@ -107,8 +107,13 @@ class PanelFacesConfig extends React.Component<PanelFacesProps,{}> {
         }
 
         return <div className="panel-faces" style={position}>{
-            this.props.tags.map( face => <TagFaceConfig key={face.id} id={face.id} image={face.image} onFaceSelected={this.props.onFaceSelected}/>)
+            this.props.tags.map( face => <TagFaceConfig key={face.id} id={face.id} image={face.image} onFaceSelected={() => {this.onClick()}}/>)
         }</div>
+    }
+
+    onClick() {
+        var newfolder = interop.chooseSingleFolder();
+        console.log(newfolder);
     }
 }
 
@@ -157,8 +162,8 @@ class TagFaceConfig extends React.Component<TagFaceProps,{}> {
     render() {
         var props: TagFaceProps = this.props;
         return <div className="facebox-config">
-                <img className="facebox-config-img" src={`resources/${props.image}`} onClick={() => props.onFaceSelected(props.id)} />
-                <button className="facebox-config-input">{props.id}</button>
+                <img className="facebox-config-img" src={`resources/${props.image}`} />
+                <button className="facebox-config-input" onClick={() => props.onFaceSelected(props.id)}>{props.id}</button>
             </div>;
     }
 }
