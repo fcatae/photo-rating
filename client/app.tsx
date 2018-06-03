@@ -1,7 +1,5 @@
 /// <reference path="html_globals.d.ts" />
 
-import * as path from 'path';
-
 import * as interop from './interop.js';
 import * as action from './action.js';
 
@@ -122,21 +120,7 @@ class PanelFacesConfig extends React.Component<PanelFacesConfigProps,{}> {
     }
 
     onConfigChange(id: string) {
-        var home = process.env.userprofile
-        var defaultPicturesFolder = `${home}\\Pictures`
-        
-        var newfolder = interop.chooseSingleFolder(defaultPicturesFolder);
-        var relativeFolder = path.relative(defaultPicturesFolder, newfolder);
-
-        var validRelativeFolder = relativeFolder[0] != '.';
-
-        if( !validRelativeFolder ) {
-            alert('invalid path');            
-        }
-
-        if( newfolder != null && validRelativeFolder) {
-            this.props.onConfigChange(id, relativeFolder);
-        }
+        this.props.onConfigChange(id);
     }
 }
 

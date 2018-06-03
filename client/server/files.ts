@@ -8,7 +8,6 @@ var home = process.env.userprofile
 var defaultPicturesFolder = `${home}\\Pictures`
 
 function enumerateImageFiles(folder: string) : string[] {
-    console.log(folder)
     if( !fs.existsSync(folder) ) {
         return [];
     }

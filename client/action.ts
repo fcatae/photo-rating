@@ -1,5 +1,7 @@
 /// <reference path="html_globals.d.ts" />
 
+import * as path from 'path';
+
 import * as interop from './interop.js';
 import { VFile } from './server/vfiles.js';
 import { start } from 'repl';
@@ -92,8 +94,6 @@ function photoApp_Page(state = "config", action) : string {
 function photoApp_Tags(state = initialState_Tags, action) {   
     if( action.type == CONFIG_UPDATE_TAG ) {
         var tags = { ...initialState_Tags };
-        console.dir(tags);
-        console.log(action.id)
         tags[action.id].name = action.name;
     }
     return state;
@@ -148,8 +148,24 @@ const mapDispatchToProps: any = (dispatch) => {
 
             dispatch(startApp("app"));
         },
-        onConfigChange: (id: string, name: string) => {
-            dispatch(configUpdateTag(id, name));
+        onConfigChange: (id: string) => {
+
+            var home = process.env.userprofile
+            var defaultPicturesFolder = `${home}\\Pictures`
+            
+            var newfolder = interop.chooseSingleFolder(defaultPicturesFolder);
+            var relativeFolder = path.relative(defaultPicturesFolder, newfolder);
+    
+            var validRelativeFolder = relativeFolder[0] != '.';
+    
+            if( !validRelativeFolder ) {
+                alert('invalid path');            
+            }
+    
+            if( newfolder != null && validRelativeFolder) {
+                dispatch(configUpdateTag(id, relativeFolder));
+            }
+            
         },
         onFaceSelected: (id: string) => {
 
