@@ -85,7 +85,7 @@ function photoApp(state : AppState = initialState, action) : AppState {
 
 function photoApp_Page(state = "config", action) : string {  
     if( action.type == START_APP ) {
-        return "app";
+        return action.page;
     }
 
     return state;
@@ -174,21 +174,28 @@ const mapDispatchToProps: any = (dispatch) => {
             }
 
             if( id != null && id[0] == ':' ) {
+                var next: VFile;
                 if( id.length > 1 && id[1] == '<' ) {
-                    var next = interop.getPrevImageVFile();
+                    next = interop.getPrevImageVFile();
                     dispatch(setImageFile(next))                      
                     if(next!= null) {
                         dispatch(setImage(next.sourcePath))
                         dispatch(setImageTag(next.tag))
                     }
                 } else if( id.length > 1 && id[1] == '>' ) {
-                    var next = interop.getNextImageVFile();
+                    next = interop.getNextImageVFile();
                     dispatch(setImageFile(next))  
                     if(next!= null) {
                         dispatch(setImage(next.sourcePath))
                         dispatch(setImageTag(next.tag))
                     }
                 }
+
+                // go back to config
+                if(next === null) {
+                    dispatch(startApp("config"));
+                }
+
                 return;
             }
 
