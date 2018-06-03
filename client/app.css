@@ -31,3 +31,7 @@
     margin: 0px 10px;
     margin-top: 40px;
 }
+
+.imagebox-img {
+    max-height: 120vw;
+}
