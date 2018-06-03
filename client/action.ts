@@ -62,9 +62,9 @@ export function setImageFile(file: VFile) {
 }
 
 const initialState_Tags : { [id: string] : AppState_Tag } = {            
-    'SUPERB': { name:'s1', image:'superb.png'}, 
-    'GOOD': { name:'g1', image:'good.png'}, 
-    'BAD': { name:'b1', image:'bad.png'},
+    'SUPERB': { name:'SUPERB', image:'superb.png'}, 
+    'GOOD': { name:'GOOD', image:'good.png'}, 
+    'BAD': { name:'BAD', image:'bad.png'},
 }
 
 const initialState: AppState = {
