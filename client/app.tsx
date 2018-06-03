@@ -9,11 +9,22 @@ interface AppProps_Tag {
 }
 
 interface AppProps {
+    activePage: string;
     currentImage?: string
     currentTag?: string
     onFaceSelected?: Function
     onInit?: Function
     tagsConfig?: { [id: string] : AppProps_Tag };
+}
+
+export class RootPage extends React.Component<AppProps,{}> {
+    render() {
+        if(this.props.activePage == "app") {
+            return <App {...this.props}/>
+        }
+
+        return <AppConfig {...this.props}/>
+    }
 }
 
 export class AppConfig extends React.Component<AppProps,{}> {
@@ -162,10 +173,10 @@ class ImageBox extends React.Component<ImageBoxProps,{}> {
 
 var store = action.Store;
 
+var PhotoRootPage = action.ConnectPhotoApp(RootPage);
 var PhotoApp = action.ConnectPhotoApp(App);
 var PhotoAppConfig = action.ConnectPhotoApp(AppConfig);
 
 ReactDOM.render(<ReactRedux.Provider store={store}>
-    <PhotoApp/>
-    {/* <PhotoAppConfig/> */}
+    <PhotoAppConfig activePage=""/>
   </ReactRedux.Provider>, document.getElementById('app'));
