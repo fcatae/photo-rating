@@ -43,3 +43,8 @@ export function getDefaultPicturesFolder() {
     var home = process.env.userprofile;
     return `${home}\\Pictures`;
 }
+
+export function listenEvents(eventName: string, callback) {
+    const {ipcRenderer} = require('electron')
+    ipcRenderer.on(eventName, callback)    
+}

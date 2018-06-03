@@ -252,3 +252,6 @@ export const ConnectPhotoApp = ReactRedux.connect(
 
 export const Store = store;
 
+interop.listenEvents('appReset', (event, args) => {
+    store.dispatch(startApp('config'));
+});

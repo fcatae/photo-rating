@@ -72,6 +72,6 @@ function createMenuItems() {
   }
 
   function restartApplication(folder) {    
-    console.log(folder);
+    mainWindow.webContents.send('appReset', folder);
   }
 }
