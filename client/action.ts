@@ -18,6 +18,7 @@ interface AppState {
 }
 
 export const START_APP = 'START_APP';
+export const CONFIG_UPDATE_TAG = 'CONFIG_UPDATE_TAG';
 export const SET_IMAGE = 'SET_IMAGE';
 export const SET_IMAGE_TAG = 'SET_IMAGE_TAG';
 export const SET_IMAGE_FILE = 'SET_IMAGE_FILE';
@@ -26,6 +27,14 @@ export function startApp(page: string) {
     return {
         type: START_APP,
         page: page
+    };
+}
+
+export function configUpdateTag(id: string, name: string) {
+    return {
+        type: CONFIG_UPDATE_TAG,
+        id: id,
+        name: name
     };
 }
 
@@ -80,7 +89,13 @@ function photoApp_Page(state = "config", action) : string {
     return state;
 }
 
-function photoApp_Tags(state = initialState_Tags, action) {      
+function photoApp_Tags(state = initialState_Tags, action) {   
+    if( action.type == CONFIG_UPDATE_TAG ) {
+        var tags = { ...initialState_Tags };
+        console.dir(tags);
+        console.log(action.id)
+        tags[action.id].name = action.name;
+    }
     return state;
 }
 
@@ -132,6 +147,9 @@ const mapDispatchToProps: any = (dispatch) => {
             interop.initVFolder(null, [null, tags['BAD'].name, tags['GOOD'].name, tags['SUPERB'].name ]);
 
             dispatch(startApp("app"));
+        },
+        onConfigChange: (id: string, name: string) => {
+            dispatch(configUpdateTag(id, name));
         },
         onFaceSelected: (id: string) => {
 

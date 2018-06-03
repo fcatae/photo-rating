@@ -1,9 +1,12 @@
 /// <reference path="html_globals.d.ts" />
 
+import * as path from 'path';
+
 import * as interop from './interop.js';
 import * as action from './action.js';
 
 interface AppProps_Tag {
+    id: string;
     name: string;
     image: string; 
 }
@@ -12,6 +15,7 @@ interface AppProps {
     activePage?: string;
     currentImage?: string
     currentTag?: string
+    onConfigChange?: Function,
     onFaceSelected?: Function,
     onStartApp?: Function,
     onInit?: Function
@@ -32,15 +36,15 @@ export class AppConfig extends React.Component<AppProps,{}> {
     render() {
         var configTags = this.props.tagsConfig;
         var mytags = [             
-            {id: configTags['SUPERB'].name, image: configTags['SUPERB'].image}, 
-            {id: configTags['GOOD'].name, image: configTags['GOOD'].image}, 
-            {id: configTags['BAD'].name, image: configTags['BAD'].image}
+            {_id: 'SUPERB', id: configTags['SUPERB'].name, image: configTags['SUPERB'].image}, 
+            {_id: 'GOOD', id: configTags['GOOD'].name, image: configTags['GOOD'].image}, 
+            {_id: 'BAD', id: configTags['BAD'].name, image: configTags['BAD'].image}
         ];
 
-        var nextButton = [{id:':>', image:'next.png'}];
+        var nextButton = [{_id:':>', id:':>', image:'next.png'}];
 
         return <div className="configbox">
-            <PanelFacesConfig position="top" tags={mytags} onFaceSelected={this.props.onFaceSelected}/>
+            <PanelFacesConfig position="top" tags={mytags} onConfigChange={this.props.onConfigChange} />
             <PanelFaces position="right" tags={nextButton} onFaceSelected={this.props.onStartApp}/>
         </div>    
     }
@@ -55,15 +59,15 @@ export class App extends React.Component<AppProps,{}> {
         var curTag = this.props.currentTag;
         
         var mytagsLeft = [ 
-            {id:':<', image:'prev.png'}];
+            {_id:':<', id:':<', image:'prev.png'}];
 
         var configTags = this.props.tagsConfig;
         var mytags = [             
-            {id: configTags['SUPERB'].name, image: configTags['SUPERB'].image}, 
-            {id:':none', image:'none.png'}, 
-            {id: configTags['GOOD'].name, image: configTags['GOOD'].image}, 
-            {id: configTags['BAD'].name, image: configTags['BAD'].image},
-            {id:':>', image:'next.png'}
+            {_id: 'SUPERB', id: configTags['SUPERB'].name, image: configTags['SUPERB'].image}, 
+            {_id: ':none', id:':none', image:'none.png'}, 
+            {_id: 'GOOD', id: configTags['GOOD'].name, image: configTags['GOOD'].image}, 
+            {_id: 'BAD', id: configTags['BAD'].name, image: configTags['BAD'].image},
+            {_id: ':>', id:':>', image:'next.png'}
         ];
 
         var mytagsTop = mytags.filter(t => t.id == curTag);        
@@ -91,7 +95,13 @@ interface PanelFacesProps {
     onFaceSelected: Function
 }
 
-class PanelFacesConfig extends React.Component<PanelFacesProps,{}> {
+interface PanelFacesConfigProps {
+    position?: string,
+    tags: ITagFace[],
+    onConfigChange: Function
+}
+
+class PanelFacesConfig extends React.Component<PanelFacesConfigProps,{}> {
     render() {        
         var positionTop = { right: '50%', left: '50%', top: 0 };
         var positionRight = { right: 0, bottom: 0 };
@@ -107,13 +117,26 @@ class PanelFacesConfig extends React.Component<PanelFacesProps,{}> {
         }
 
         return <div className="panel-faces" style={position}>{
-            this.props.tags.map( face => <TagFaceConfig key={face.id} id={face.id} image={face.image} onFaceSelected={() => {this.onClick()}}/>)
+            this.props.tags.map( face => <TagFaceConfig key={face._id} id={face.id} image={face.image} onFaceSelected={() => {this.onConfigChange(face._id)}}/>)
         }</div>
     }
 
-    onClick() {
-        var newfolder = interop.chooseSingleFolder();
-        console.log(newfolder);
+    onConfigChange(id: string) {
+        var home = process.env.userprofile
+        var defaultPicturesFolder = `${home}\\Pictures`
+        
+        var newfolder = interop.chooseSingleFolder(defaultPicturesFolder);
+        var relativeFolder = path.relative(defaultPicturesFolder, newfolder);
+
+        var validRelativeFolder = relativeFolder[0] != '.';
+
+        if( !validRelativeFolder ) {
+            alert('invalid path');            
+        }
+
+        if( newfolder != null && validRelativeFolder) {
+            this.props.onConfigChange(id, relativeFolder);
+        }
     }
 }
 
@@ -139,6 +162,7 @@ class PanelFaces extends React.Component<PanelFacesProps,{}> {
 }
 
 interface ITagFace {
+    _id: string;
     id: string;
     image: string;
 }

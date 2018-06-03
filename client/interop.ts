@@ -28,9 +28,9 @@ export function changeTag(vfile: VFile, tag: string) {
     vfolder.syncFile(vfile);
 }
 
-export function chooseSingleFolder() : string {
+export function chooseSingleFolder(startFolder: string) : string {
     var dialogProperties : Electron.OpenDialogOptions = {
-        defaultPath: defaultPicturesFolder,
+        defaultPath: startFolder,
         properties: ['openDirectory']
     };
     var folders = remote.dialog.showOpenDialog(dialogProperties);
