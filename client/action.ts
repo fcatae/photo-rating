@@ -2,6 +2,7 @@
 
 import * as interop from './interop.js';
 import { VFile } from './server/vfiles.js';
+import { start } from 'repl';
 
 interface AppState_Tag {
     name: string;
@@ -9,15 +10,24 @@ interface AppState_Tag {
 }
 
 interface AppState {
+    page: string;
     currentImage: string;
     currentTag: string;
     currentFile: VFile;
     tags: { [id: string] : AppState_Tag };
 }
 
+export const START_APP = 'START_APP';
 export const SET_IMAGE = 'SET_IMAGE';
 export const SET_IMAGE_TAG = 'SET_IMAGE_TAG';
 export const SET_IMAGE_FILE = 'SET_IMAGE_FILE';
+
+export function startApp(page: string) {
+    return {
+        type: START_APP,
+        page: page
+    };
+}
 
 export function setImage(image: string) {
     return {
@@ -40,22 +50,38 @@ export function setImageFile(file: VFile) {
     };
 }
 
+const initialState_Tags : { [id: string] : AppState_Tag } = {            
+    'SUPERB': { name:'SUPERB', image:'superb.png'}, 
+    'GOOD': { name:'GOOD', image:'good.png'}, 
+    'BAD': { name:'BAD', image:'bad.png'},
+}
+
 const initialState: AppState = {
+    page: "config",
     currentImage: null,
     currentTag: null,
     currentFile: null,
-    tags: {            
-        'SUPERB': { name:'SUPERB', image:'superb.png'}, 
-        'GOOD': { name:'GOOD', image:'good.png'}, 
-        'BAD': { name:'BAD', image:'bad.png'},
-    }
+    tags: initialState_Tags
 }  
 
 function photoApp(state : AppState = initialState, action) : AppState {       
     return { 
         ...photoApp_File(state, action),
-        tags: state.tags
+        page: photoApp_Page(state.page, action),
+        tags: photoApp_Tags(state.tags, action)
     };
+}
+
+function photoApp_Page(state = "config", action) : string {  
+    if( action.type == START_APP ) {
+        return "app";
+    }
+
+    return state;
+}
+
+function photoApp_Tags(state = initialState_Tags, action) {      
+    return state;
 }
 
 function photoApp_File(state = initialState, action) {    
@@ -91,6 +117,7 @@ store.subscribe( ()=> {
 
 const mapStateToProps: any = (state: AppState) => {
     return {
+        activePage: state.page,
         currentImage: state.currentImage,
         currentTag: state.currentTag,
         tagsConfig: state.tags
@@ -99,6 +126,9 @@ const mapStateToProps: any = (state: AppState) => {
 
 const mapDispatchToProps: any = (dispatch) => {
     return {
+        onStartApp: () => {
+            dispatch(startApp("app"));
+        },
         onFaceSelected: (id: string) => {
 
             if( id == ":none") {

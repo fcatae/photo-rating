@@ -9,10 +9,11 @@ interface AppProps_Tag {
 }
 
 interface AppProps {
-    activePage: string;
+    activePage?: string;
     currentImage?: string
     currentTag?: string
-    onFaceSelected?: Function
+    onFaceSelected?: Function,
+    onStartApp?: Function,
     onInit?: Function
     tagsConfig?: { [id: string] : AppProps_Tag };
 }
@@ -36,9 +37,12 @@ export class AppConfig extends React.Component<AppProps,{}> {
             {id: configTags['BAD'].name, image: configTags['BAD'].image}
         ];
 
+        var nextButton = [{id:':>', image:'next.png'}];
+
         return <div className="configbox">
-        <PanelFacesConfig position="top" tags={mytags} onFaceSelected={this.props.onFaceSelected}/>
-    </div>    
+            <PanelFacesConfig position="top" tags={mytags} onFaceSelected={this.props.onFaceSelected}/>
+            <PanelFaces position="right" tags={nextButton} onFaceSelected={this.props.onStartApp}/>
+        </div>    
     }
 }
 
@@ -178,5 +182,5 @@ var PhotoApp = action.ConnectPhotoApp(App);
 var PhotoAppConfig = action.ConnectPhotoApp(AppConfig);
 
 ReactDOM.render(<ReactRedux.Provider store={store}>
-    <PhotoAppConfig activePage=""/>
+    <PhotoRootPage/>
   </ReactRedux.Provider>, document.getElementById('app'));
