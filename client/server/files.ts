@@ -7,7 +7,11 @@ import { VFolder, VFile } from './vfiles.js'
 var home = process.env.userprofile
 var defaultPicturesFolder = `${home}\\Pictures`
 
-function enumerateImageFiles(folder: string) {
+function enumerateImageFiles(folder: string) : string[] {
+    if( !fs.existsSync(folder) ) {
+        return [];
+    }
+
     var files = fs
                 .readdirSync(folder)
                 .map(appendFolderName(folder))
