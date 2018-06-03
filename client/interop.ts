@@ -5,14 +5,11 @@ import { VFile, VFolder } from './server/vfiles.js';
 
 import { remote } from 'electron';
 
-var home = process.env.userprofile
-var defaultPicturesFolder = `${home}\\Pictures`
-
 var vfolder: VFolder;
 
 // PUBLIC
 export function initVFolder(folder: string, tags: string[]) {
-    vfolder = createVFolderTags(folder, tags.concat([null]));
+    vfolder = createVFolderTags(folder, tags);
 }
 
 export function getPrevImageVFile(): VFile {
@@ -40,4 +37,9 @@ export function chooseSingleFolder(startFolder: string) : string {
     }
 
     return folders[0];
+}
+
+export function getDefaultPicturesFolder() {
+    var home = process.env.userprofile;
+    return `${home}\\Pictures`;
 }

@@ -4,9 +4,6 @@ import * as fs from 'fs';
 import * as path from 'path';
 import { VFolder, VFile } from './vfiles.js'
 
-var home = process.env.userprofile
-var defaultPicturesFolder = `${home}\\Pictures`
-
 function enumerateImageFiles(folder: string) : string[] {
     if( !fs.existsSync(folder) ) {
         return [];
@@ -35,8 +32,9 @@ function appendFolderName(folder: string) {
 }
 
 export function createVFolderTags(folderName: string, tags: string[]) : VFolder {
-    folderName = folderName || defaultPicturesFolder;
-    
+    if(folderName == null) {
+        throw "invalid argument: folderName == null"
+    }
     var folders = tags.map(t => createVFolder(folderName, t));
 
     return VFolder.createTreeFrom(folderName, folders);

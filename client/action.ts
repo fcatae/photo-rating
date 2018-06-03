@@ -13,6 +13,7 @@ interface AppState_Tag {
 
 interface AppState {
     page: string;
+    currentFolder: string;
     currentImage: string;
     currentTag: string;
     currentFile: VFile;
@@ -69,6 +70,7 @@ const initialState_Tags : { [id: string] : AppState_Tag } = {
 
 const initialState: AppState = {
     page: "config",
+    currentFolder: interop.getDefaultPicturesFolder(),
     currentImage: null,
     currentTag: null,
     currentFile: null,
@@ -78,9 +80,18 @@ const initialState: AppState = {
 function photoApp(state : AppState = initialState, action) : AppState {       
     return { 
         ...photoApp_File(state, action),
+        currentFolder: photoApp_Folder(state.currentFolder, action),
         page: photoApp_Page(state.page, action),
         tags: photoApp_Tags(state.tags, action)
     };
+}
+
+function photoApp_Folder(state, action) : string {  
+    if( state == null ) {
+        state = interop.getDefaultPicturesFolder();
+    }
+    
+    return state;
 }
 
 function photoApp_Page(state = "config", action) : string {  
@@ -146,18 +157,16 @@ const mapDispatchToProps: any = (dispatch) => {
     return {
         onStartApp: () => {
             // Init
+            var currentFolder = store.getState().currentFolder;
             var tags = store.getState().tags;
-            interop.initVFolder(null, [null, tags['BAD'].name, tags['GOOD'].name, tags['SUPERB'].name ]);
+            interop.initVFolder(currentFolder, [null, tags['BAD'].name, tags['GOOD'].name, tags['SUPERB'].name ]);
 
             dispatch(startApp("app"));
         },
         onConfigChange: (id: string) => {
-
-            var home = process.env.userprofile
-            var defaultPicturesFolder = `${home}\\Pictures`
-            
-            var newfolder = interop.chooseSingleFolder(defaultPicturesFolder);
-            var relativeFolder = path.relative(defaultPicturesFolder, newfolder);
+            var currentFolder = store.getState().currentFolder;
+            var newfolder = interop.chooseSingleFolder(currentFolder);
+            var relativeFolder = path.relative(currentFolder, newfolder);
     
             var validRelativeFolder = relativeFolder[0] != '.';
     
